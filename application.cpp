@@ -6,7 +6,7 @@ using namespace std;
 
 struct node{
 	int pass;
-	char urgency; //a = Alto; m = Mï¿½dio; b = Baixa
+	char urgency; //a = Alto; m = Medio; b = Baixa
 	struct node *next;
 };
 
@@ -17,6 +17,7 @@ void Insert(int pass, char type){
 	node *newNode = new struct node;
 	(*newNode).pass = pass;
 	(*newNode).urgency = type;
+	
 	if(quantNode <= 0){
 		(*newNode).next = NULL;
 		firstNode = newNode;
@@ -29,22 +30,21 @@ void Insert(int pass, char type){
 	switch(type){
 		case 'a':
 			while(true){
-				if((*nodeCheck).next == NULL){
-					(*nodeCheck).next = newNode;
-					(*newNode).next = NULL;
-					break;	
-				} else{
-					if((*nodeCheck).urgency == 'm'){
-						(*newNode).next = nodeCheck;
-						firstNode = newNode;
-						break;
-					}
-					if((*nodeCheck).urgency == 'a' && (*(*nodeCheck).next).urgency != 'a'){
-						(*newNode).next = (*nodeCheck).next;
-						(*nodeCheck).next = newNode;
-						break;
-					}
+				// No caso da primeira não ser um chamado de urgência alta
+				// E no caso já teria que ir na frente
+				if((*nodeCheck).urgency != 'a'){
+					(*newNode).next = nodeCheck;
+					firstNode = newNode;
+					break;
 				}
+				
+				// Se a urgência do próximo nó do nó da checagem for média ou baixa ou null ele irá se encaixar após o nó de checagem
+				if((*(*nodeCheck).next).urgency == 'm' || (*(*nodeCheck).next).urgency == 'b' || (*nodeCheck).next == NULL){
+					(*newNode).next = (*nodeCheck).next;
+					(*nodeCheck).next = newNode;
+					break;
+				}
+				
 				nodeCheck = (*nodeCheck).next;
 			}
 			
@@ -52,49 +52,59 @@ void Insert(int pass, char type){
 			
 		case 'm':
 			while(true){
-				if((*nodeCheck).next == NULL){
-					(*nodeCheck).next = newNode;
-					(*newNode).next = NULL;
-					break;	
-				} else{
-					if((*nodeCheck).urgency == 'm' && (*(*nodeCheck).next).urgency != 'm'){
-						(*newNode).next = (*nodeCheck).next;
-						(*nodeCheck).next = newNode;
-						break;
-					}
+				// No caso da primeira ser um chamada de nível baixo
+				// E no caso já teria que ir na frente
+				if((*nodeCheck).urgency == 'b'){
+					(*newNode).next = nodeCheck;
+					firstNode = newNode;
+					break;
 				}
-				nodeCheck= (*nodeCheck).next;
+				
+				
+				// Se o próximo for baixa ou null ele se encaixa após o nó de checagem
+				if((*(*nodeCheck).next).urgency == 'b' || (*nodeCheck).next == NULL){
+					(*newNode).next = (*nodeCheck).next;
+					(*nodeCheck).next = newNode;
+					break;
+				}
+				
+				nodeCheck = (*nodeCheck).next;
+
 			}
 			
 			break;
 			
 		case 'b':
-			while(true){
+			while(true){	
+				// Os chamdos de nível baico sempre serão colocados como últimos na lista, logo será colocado entre o último nó e o null
 				if((*nodeCheck).next == NULL){
+					(*newNode).next = (*nodeCheck).next;
 					(*nodeCheck).next = newNode;
-					(*newNode).next = NULL;
-					break;	
-				} else{
-					if((*nodeCheck).urgency == 'b' && (*(*nodeCheck).next).urgency != 'b'){
-						(*newNode).next = (*nodeCheck).next;
-						(*nodeCheck).next = newNode;
-						break;
-					}
+					break;
 				}
 				nodeCheck = (*nodeCheck).next;
+
 			}
 			
 			break;
 	}
 	
-	quantNode++;
+	
+	quantNode++;	
+
 }
+
 
 int main(){
 	Insert(22, 'm');
 	Insert(18, 'a');
 	Insert(10, 'b');
-	Insert(20, 'a');
+	Insert(20, 'm');
+	Insert(40, 'm');
+	Insert(80, 'a');
+	Insert(82, 'a');
+	Insert(88, 'a');
+	Insert(92, 'b');
 	
 	node *nodeView = firstNode;
 	
@@ -105,4 +115,6 @@ int main(){
 	
 	cout << "NULL" << endl;
 	
+	system("pause");
 }
+
