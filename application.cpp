@@ -46,7 +46,7 @@ void Insert(int pass, char type){
 	
 				
 				// Se a urgência do próximo nó do nó da checagem for média ou baixa ou null ele irá se encaixar após o nó de checagem
-				if((*(*nodeCheck).next).urgency == 'm' || (*(*nodeCheck).next).urgency == 'b' || (*nodeCheck).next == NULL){
+				if((*nodeCheck).next == NULL || (*(*nodeCheck).next).urgency == 'm' || (*(*nodeCheck).next).urgency == 'b'){
 					(*newNode).next = (*nodeCheck).next;
 					(*nodeCheck).next = newNode;
 					break;
@@ -67,11 +67,8 @@ void Insert(int pass, char type){
 					break;
 				}
 				
-					// OBTENDO NÓS EM IFS DE FORMA ERRADA, CORRIGITR
-					cout << (*(*nodeCheck).next).urgency;
-				system("pause");
 				// Se o próximo for baixa ou null ele se encaixa após o nó de checagem
-				if((*(*nodeCheck).next).urgency == 'b' || (*nodeCheck).next == NULL){
+				if((*nodeCheck).next == NULL || (*(*nodeCheck).next).urgency == 'b'){
 					(*newNode).next = (*nodeCheck).next;
 					(*nodeCheck).next = newNode;
 					break;
@@ -109,7 +106,7 @@ int menu(char title [100], int size, char options[10][100]){
 	int select = 0;
 	
 	while(true){
-		cout << "========== " << title << "==========" << endl;
+		cout << "========== " << title << " ==========" << endl << endl;
 		for(int i = 0; i < size; i++){
 			if(select == i){
 				printf("> %s\n", options[i]);
@@ -117,7 +114,7 @@ int menu(char title [100], int size, char options[10][100]){
 			}
 			printf("%s\n", options[i]);
 		}
-		cout << "=============================================";
+		cout << endl << "=============================================";
 		
 		ch = _getch(); // Pegar dados de teclado
 
