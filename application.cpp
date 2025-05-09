@@ -170,16 +170,16 @@ bool ExistPass(int pass){
 
 
 void App(){
-	char options[10][100] = {"Abrir Chamado", "Listar chamados", "Sair"}, optionsUrgency[10][100] = {"Alta", "Média", "Baixa", "Voltar"}; // Opções de menus
+	char options[10][100] = {"Abrir Chamado", "Atender chamado", "Listar chamados", "Sair"}, optionsUrgency[10][100] = {"Alta", "Média", "Baixa", "Voltar"}; // Opções de menus
 	int select, selectUrgency; // Selecionadores de opções
 	node *nodeView; // Ponteiro para referencia de listagem
 	
 	// Inicializando srand
-	srand(time(NULL));	
+	srand(time(NULL));
 	
 	while(true){
 	
-		select = Menu("Selecione a opção desejada", 3, options);
+		select = Menu("Selecione a opção desejada", 4, options);
 		
 		switch(select){
 			case 0:
@@ -217,6 +217,35 @@ void App(){
 				break;
 				
 			case 1:
+				system("cls");
+				
+				if(quantNode <= 0){
+					cout << "Não há chamados na lista" << endl;
+					system("pause");
+					system("cls");
+					continue;
+				}
+				
+				node* taskService;
+				taskService = firstNode;
+				
+				int pass;
+				pass = (*taskService).pass;
+				
+				
+				firstNode = (*taskService).next;
+				
+				delete taskService;
+				
+				quantNode--;
+				
+				cout << "Senha " << pass << " atendida com sucesso" << endl;
+				system("pause");
+				system("cls");
+				continue;
+				break;
+				
+			case 2:
 				system("cls");
 				if(quantNode <= 0){
 					cout << "Nenhum chamado cadastrado" << endl;
