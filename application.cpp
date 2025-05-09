@@ -101,7 +101,7 @@ void Insert(int pass, char type){
 }
 
 
-int menu(char title [100], int size, char options[10][100]){
+int Menu(char title [100], int size, char options[10][100]){
 	int ch;
 	int select = 0;
 	
@@ -169,7 +169,7 @@ bool ExistPass(int pass){
 }
 
 
-void app(){
+void App(){
 	char options[10][100] = {"Abrir Chamado", "Listar chamados", "Sair"}, optionsUrgency[10][100] = {"Alta", "Média", "Baixa", "Voltar"}; // Opções de menus
 	int select, selectUrgency; // Selecionadores de opções
 	node *nodeView; // Ponteiro para referencia de listagem
@@ -179,13 +179,13 @@ void app(){
 	
 	while(true){
 	
-		select = menu("Selecione a opção desejada", 3, options);
+		select = Menu("Selecione a opção desejada", 3, options);
 		
 		switch(select){
 			case 0:
 				system("cls");
 				
-				selectUrgency = menu("Selecione a urgência do chamado", 4, optionsUrgency);
+				selectUrgency = Menu("Selecione a urgência do chamado", 4, optionsUrgency);
 				
 				int key;
 				
@@ -231,15 +231,15 @@ void app(){
 					cout << "=======================" << endl;
 					
 					if((*nodeView).urgency == 'a'){
-						cout << "|Senha: " << (*nodeView).pass  << endl << "|Urgência: Alta" << endl;
+						cout << "| Senha: " << (*nodeView).pass  << "          |" << endl << "| Urgência: Alta      |" << endl;
 					}
 					
 					if((*nodeView).urgency == 'm'){
-						cout << "|Senha: " << (*nodeView).pass  << endl << "|Urgência: Média" << endl;
+						cout << "| Senha: " << (*nodeView).pass << "          |"<< endl << "| Urgência: Média     |" << endl;
 					}
 					
 					if((*nodeView).urgency == 'b'){
-						cout << "|Senha: " << (*nodeView).pass  << endl << "|Urgência: Baixa" << endl;
+						cout << "| Senha: " << (*nodeView).pass << "          |" << endl << "| Urgência: Baixa     |" << endl;
 					}
 					
 					cout << "=======================" << endl;
@@ -270,7 +270,7 @@ void app(){
 int main(){
 	setlocale(LC_ALL, "Portuguese");
 	
-	app();
+	App();
 }
 
 
